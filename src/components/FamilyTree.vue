@@ -141,6 +141,7 @@ export default {
     this.nodes = this.transformData(data)
     this.initTree(this.$refs.tree, this.nodes)
     const tempChart = this.chart;
+
     this.chart.on('field', function(sender, args) {
       if (args.name == 'level') {
         let level = tempChart.getNode(args.data.id)?.level;
@@ -148,23 +149,16 @@ export default {
       }
     });
     this.chart.onUpdateNode(async (args) => {
-      let rs = false;
-      console.log(args);
-      if (isNaN(args['newData']?.id)) {
-        args['newData']['id'] = ++this.nodes.slice(-1)[0].id;
-        rs = await this.addNewNode(args['newData']);
-      } else {
-        rs = await this.updateNode(args['newData']);
-      }
-      if (rs.id && args['newData']?.id === rs?.id) {
-        return true
-      }
-      alert('Lỗi')
-      return false
+      await this.updateNode(args['newData']);
+    });
+    this.chart.onAddNode(async (args) => {
+      args['data']['id']= ++this.nodes.slice(-1)[0].id;
+      await this.addNewNode(args['data']);
+      const data = await this.callApiMembers()
+      this.chart.load(data)
     });
     this.chart.onRemoveNode(async (args) => {
-      const rs = await this.removeNode(args.id);
-      return false;
+      await this.removeNode(args.id);
     });
   }
 }
