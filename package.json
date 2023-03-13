@@ -11,8 +11,8 @@
   "dependencies": {
     "@balkangraph/orgchart.js": "^8.9.45",
     "json-server": "^0.17.2",
-    "lodash": "^4.17.21",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

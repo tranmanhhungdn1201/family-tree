@@ -1,9 +1,17 @@
-import HelloWorld from "./components/HelloWorld.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from "./components/Home.vue";
 import FamilyTree from "./components/FamilyTree.vue";
 
-const routes = [
-    { path: '/', component: HelloWorld, name: 'home' },
-    { path: '/family-tree', component: FamilyTree, name: 'familyTree' },
-];
-
-export default routes;
+export default createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            path: '/',
+            component: Home,
+        },
+        {
+            path: '/family-tree',
+            component: FamilyTree
+        }
+    ],
+})

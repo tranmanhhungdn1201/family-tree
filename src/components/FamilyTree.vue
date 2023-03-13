@@ -5,13 +5,11 @@
 <script>
 
 import OrgChart from '@balkangraph/orgchart.js'
-import _ from 'lodash';
 
 export default {
 
   name: 'tree',
   data() {
-    console.log('data');
     return {
       nodes: [
         {}
@@ -20,53 +18,61 @@ export default {
   },
   methods: {
     initTree: function(domEl, nodes) {
-      console.log('init tree', this.nodes)
       OrgChart.templates.ana.field_0 =
           '<text class="field_0" style="font-size: 25px;" fill="#ffffff" x="125" y="30" text-anchor="middle">{val}</text>';
       OrgChart.templates.ana.field_1 =
           '<text class="field_1" style="font-size: 14px;" fill="#ffffff" x="125" y="70" text-anchor="middle">{val}</text>';
-
+      OrgChart.templates.ana.field_2 =
+          '<text class="field_1" style="font-size: 13px;" fill="#e7e22c" x="30" y="100" text-anchor="middle">{val}</text>';
+      OrgChart.SEARCH_PLACEHOLDER = 'Tìm kiếm'
       this.chart = new OrgChart (domEl, {
         nodes,
         ...this.getConfigChart()
       });
     },
+    getModeEdit: function() {
+      return this.$route.query.edit === 'true'
+    },
     getConfigChart: function () {
+      const editMode = this.getModeEdit();
+      let nodeMenu = null;
+      let buttons = null;
+      if (editMode) {
+        nodeMenu = {
+          details: { text: "Thông tin" },
+          add: { text: "Thêm mới" },
+          remove: { text: "Xóa" },
+          edit: { text: "Sửa"}
+        }
+        buttons = {
+          edit: {
+            icon: OrgChart.icon.edit(24,24,'#fff'),
+                text: 'Sửa',
+                hideIfEditMode: true,
+                hideIfDetailsMode: false,
+          },
+          share: null,
+              pdf: null,
+              remove: {
+            icon: OrgChart.icon.remove(24,24,'#fff'),
+                text: 'Xóa',
+                hideIfDetailsMode: true
+          },
+        }
+      }
       return {
         nodeBinding: {
           field_0: "name",
           field_1: "description",
           field_2: "level"
         },
-        linkBinding: {
-          link_field_0: "level"
-        },
-        nodeMenu: {
-          details: { text: "Thông tin" },
-          add: { text: "Thêm mới" },
-          remove: { text: "Xóa" },
-          edit: { text: "Sửa"}
-        },
+        nodeMenu,
         editForm: {
           addMore: null,
           cancelBtn: "Hủy",
           saveAndCloseBtn: 'Lưu và đóng',
-          generateElementsFromFields: true,
-          buttons:  {
-            edit: {
-              icon: OrgChart.icon.edit(24,24,'#fff'),
-              text: 'Sửa',
-              hideIfEditMode: true,
-              hideIfDetailsMode: false,
-            },
-            share: null,
-            pdf: null,
-            remove: {
-              icon: OrgChart.icon.remove(24,24,'#fff'),
-              text: 'Xóa',
-              hideIfDetailsMode: true
-            },
-          },
+          generateElementsFromFields: false,
+          buttons,
           elements: [
             { type: 'textbox', label: 'Họ và tên', binding: 'name' },
             { type: 'date', label: 'Ngày sinh', binding: 'dob' },
@@ -87,7 +93,6 @@ export default {
           })
     },
     transformData: function (data) {
-      console.log(data)
       data.map(member => {
         //remove key
         const hideFields = ['dateDie'];
@@ -101,9 +106,20 @@ export default {
         delete member[key];
       }
     },
-    saveNode: function (data) {
+    updateNode: function (data) {
       return fetch('http://localhost:3000/members/' + data.id, {
         method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).then(response => {
+        return response.json();
+      })
+    },
+    addNewNode: function (data) {
+      return fetch('http://localhost:3000/members', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -118,22 +134,28 @@ export default {
       }).then(response => {
         return response.json();
       })
-    }
+    },
   },
   async mounted () {
-    console.log('moun')
     let data = await this.callApiMembers()
     this.nodes = this.transformData(data)
     this.initTree(this.$refs.tree, this.nodes)
     const tempChart = this.chart;
-    this.chart.on('field', function(sender, args){
-      if (args.name == 'level'){
-        console.log(tempChart.getNode(args.data.id))
-        args.value = "Đời: " + tempChart.getNode(args.data.id)?.level;
+    this.chart.on('field', function(sender, args) {
+      if (args.name == 'level') {
+        let level = tempChart.getNode(args.data.id)?.level;
+        args.value = level ? `(Đời: ${level})` : '';
       }
     });
     this.chart.onUpdateNode(async (args) => {
-      const rs = await this.saveNode(args['newData']);
+      let rs = false;
+      console.log(args);
+      if (isNaN(args['newData']?.id)) {
+        args['newData']['id'] = ++this.nodes.slice(-1)[0].id;
+        rs = await this.addNewNode(args['newData']);
+      } else {
+        rs = await this.updateNode(args['newData']);
+      }
       if (rs.id && args['newData']?.id === rs?.id) {
         return true
       }
@@ -141,8 +163,7 @@ export default {
       return false
     });
     this.chart.onRemoveNode(async (args) => {
-      console.log(args.id)
-      //const rs = await this.removeNode(args.id);
+      const rs = await this.removeNode(args.id);
       return false;
     });
   }
@@ -153,5 +174,8 @@ export default {
 .boc-edit-form .boc-edit-form-fields {
   flex-grow: 0 !important;
 }
-
+#tree {
+  width: 100%;
+  height: 100%;
+}
 </style>

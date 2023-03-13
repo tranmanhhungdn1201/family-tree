@@ -1,17 +1,15 @@
 <template>
-  <div id="app">
-    <OrgChart />
-  </div>
+  <nav>
+    <router-link to="/">Trang chủ</router-link> |
+    <router-link to="/family-tree">Gia phả</router-link>
+  </nav>
+  <router-view />
 </template>
 
 <script>
-import OrgChart from './components/FamilyTree.vue'
 
 export default {
   name: 'app',
-  components: {
-    OrgChart,
-  }
 }
 </script>
 
@@ -22,7 +20,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   width: 100%;
   height: 100%;
 }
@@ -34,12 +31,6 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: Helvetica;
-}
-
-#tree {
-  width: 100%;
-  height: 100%;
-  border: 1px solid black;
 }
 
 </style>
