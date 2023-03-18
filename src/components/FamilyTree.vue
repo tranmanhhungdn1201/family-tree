@@ -19,12 +19,13 @@ export default {
   methods: {
     initTree: function(domEl, nodes) {
       OrgChart.templates.ana.field_0 =
-          '<text class="field_0" style="font-size: 25px;" fill="#ffffff" x="125" y="30" text-anchor="middle">{val}</text>';
+          '<text class="field_0" data-width="185" style="font-size: 25px;" fill="#ffffff" x="125" y="30" text-anchor="middle">{val}</text>';
       OrgChart.templates.ana.field_1 =
-          '<text class="field_1" style="font-size: 14px;" fill="#ffffff" x="125" y="70" text-anchor="middle">{val}</text>';
+          '<text class="field_1" data-width="185" style="font-size: 14px;" fill="#ffffff" x="125" y="70" text-anchor="middle">{val}</text>';
       OrgChart.templates.ana.field_2 =
-          '<text class="field_1" style="font-size: 13px;" fill="#e7e22c" x="30" y="100" text-anchor="middle">{val}</text>';
+          '<text class="field_2" data-width="185" style="font-size: 13px;" fill="#e7e22c" x="125" y="30" text-anchor="middle">{val}</text>';
       OrgChart.SEARCH_PLACEHOLDER = 'Tìm kiếm'
+      OrgChart.SEARCH_CLOSE_RESULT_ON_ESCAPE_OR_CLICKOUTSIDE = true;
       this.chart = new OrgChart (domEl, {
         nodes,
         ...this.getConfigChart()
@@ -61,6 +62,10 @@ export default {
         }
       }
       return {
+        template: "polina",
+        collapse: {
+          level: 2
+        },
         nodeBinding: {
           field_0: "name",
           field_1: "description",
@@ -148,6 +153,9 @@ export default {
         args.value = level ? `(Đời: ${level})` : '';
       }
     });
+    this.chart.on('searchclick', function (sender, args) {
+      document.querySelector('.boc-search .boc-link-boc-button').click();
+    });
     this.chart.onUpdateNode(async (args) => {
       await this.updateNode(args['newData']);
     });
@@ -171,5 +179,9 @@ export default {
 #tree {
   width: 100%;
   height: 100%;
+  background-image: url('http://4.bp.blogspot.com/-J_sg6Pyug94/ULxnyFlF_zI/AAAAAAAAP2o/-aqOcdJt58w/s1600/nengiaphavang.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>
