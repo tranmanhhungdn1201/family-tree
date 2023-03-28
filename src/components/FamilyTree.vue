@@ -5,6 +5,7 @@
 <script>
 
 import OrgChart from '@balkangraph/orgchart.js'
+import BaseService from "../service.js";
 
 export default {
 
@@ -23,7 +24,7 @@ export default {
       OrgChart.templates.ana.field_1 =
           '<text class="field_1" data-width="185" style="font-size: 14px;" fill="#ffffff" x="125" y="70" text-anchor="middle">{val}</text>';
       OrgChart.templates.ana.field_2 =
-          '<text class="field_2" data-width="185" style="font-size: 13px;" fill="#e7e22c" x="125" y="30" text-anchor="middle">{val}</text>';
+          '<text class="field_2" data-width="185" style="font-size: 13px;" fill="#e7e22c" x="30" y="100" text-anchor="middle">{val}</text>';
       OrgChart.SEARCH_PLACEHOLDER = 'Tìm kiếm'
       OrgChart.SEARCH_CLOSE_RESULT_ON_ESCAPE_OR_CLICKOUTSIDE = true;
       this.chart = new OrgChart (domEl, {
@@ -31,11 +32,8 @@ export default {
         ...this.getConfigChart()
       });
     },
-    getModeEdit: function() {
-      return this.$route.query.edit === 'true'
-    },
     getConfigChart: function () {
-      const editMode = this.getModeEdit();
+      const editMode = BaseService.getModeEdit();
       let nodeMenu = null;
       let buttons = null;
       if (editMode) {
@@ -62,7 +60,6 @@ export default {
         }
       }
       return {
-        template: "polina",
         collapse: {
           level: 2
         },
