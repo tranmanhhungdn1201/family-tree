@@ -1,16 +1,25 @@
 <template>
-  <div class="row justify-content-center mt-lg-5">
-    <h2>Đăng nhập</h2>
-    <form class="px-4 py-3 col-xl-4 col-lg-6 col-sm-12">
-      <div class="mb-3">
-        <input type="text" class="form-control" placeholder="Tên đăng nhập" v-model="name" required>
+  <section class="vh-90 row justify-content-center mt-lg-5 header">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100 w-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong header-card" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              <h3 class="mb-5">Đăng nhập</h3>
+              <div class="form-outline mb-4">
+                <input type="email" id="typeEmailX-2" class="form-control form-control-lg"  placeholder="Tài khoản" v-model="name" required/>
+              </div>
+              <div class="form-outline mb-4">
+                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Mật khẩu" v-model="password" required/>
+              </div>
+              <button class="btn btn-warning btn-lg btn-block" type="submit" @click="onSubmit">Đăng nhập</button>
+              <hr class="my-4">
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <input type="password" class="form-control"  placeholder="Mật khẩu" v-model="password" required>
-      </div>
-      <button type="submit" class="btn btn-primary" @click="onSubmit">Đăng nhập</button>
-    </form>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -61,3 +70,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+.vh-90 {
+  height: 90vh;
+}
+.header .header-card {
+  background-color: #fff3cf;
+}
+.header input {
+  background-color: #fff3cf;
+}
+
+</style>

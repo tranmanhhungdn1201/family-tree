@@ -35,7 +35,7 @@ html, body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 </style>

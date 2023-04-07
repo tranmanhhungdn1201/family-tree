@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-5">
+  <div class="container pt-5 mt-5">
     <p>
       <a class="btn-primary" @click="collapseEdit">
         Chỉnh sửa
@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+
 import BaseService from "../service.js";
 export default {
   data () {
@@ -27,7 +28,13 @@ export default {
       editor: ClassicEditor,
       editorData: '<p>Content of the editor.</p>',
       editorConfig: {
-        // The configuration of the editor.
+        plugins: [
+          // EssentialsPlugin,
+          // BoldPlugin,
+          // ItalicPlugin,
+          // LinkPlugin,
+          // ParagraphPlugin
+        ],
       }
     };
   },
