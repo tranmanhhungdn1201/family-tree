@@ -20,6 +20,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
+    "firebase": "^9.19.1",
     "json-server": "^0.17.2",
     "postcss-loader": "^4.3.0",
     "raw-loader": "^4.0.2",
