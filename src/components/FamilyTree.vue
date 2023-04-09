@@ -150,8 +150,11 @@ export default {
         args.value = level ? `(Đời: ${level})` : '';
       }
     });
-    this.chart.on('searchclick', function (sender, args) {
+    this.chart.on('searchclick', function (sender, nodeId) {
       document.querySelector('.boc-search .boc-link-boc-button').click();
+      tempChart.center(nodeId, null, function(){
+        document.querySelector(`[data-n-id="${nodeId}"]`).classList.add('highlight');
+      });
     });
     this.chart.onUpdateNode(async (args) => {
       await this.updateNode(args['newData']);
@@ -180,5 +183,15 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+[data-l-id] path {
+  stroke-width: 6 !important;
+}
+[data-n-id] rect {
+  fill: #85711f;
+}
+.highlight rect {
+  fill: #db4d4d;
 }
 </style>
