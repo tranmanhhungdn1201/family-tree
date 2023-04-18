@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from "./components/Home.vue";
 import FamilyTree from "./components/FamilyTree.vue";
 import Login from "./components/Login.vue";
+import History from "./components/History.vue";
 import BaseService from "./service.js";
 
 export default createRouter({
@@ -27,6 +28,22 @@ export default createRouter({
             path: '/',
             name: 'home',
             component: Home,
+            beforeEnter: (to, from, next) =>{
+                if (BaseService.checkAuth()) {
+                    next();
+                }
+                next({
+                    name: 'login'
+                });
+            },
+            meta: {
+                hideNavbar: false,
+            }
+        },
+        {
+            path: '/history',
+            name: 'history',
+            component: History,
             beforeEnter: (to, from, next) =>{
                 if (BaseService.checkAuth()) {
                     next();

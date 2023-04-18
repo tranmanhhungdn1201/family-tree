@@ -32,6 +32,7 @@ export default {
       originData: null,
       editorData: '',
       editorConfig: {
+        // The configuration of the editor.
       },
     };
   },
@@ -45,14 +46,14 @@ export default {
       ).then((response) => {
         return response.json();
       });
-      this.originData = res
-      this.editorData = res.intro;
+      this.originData = res;
+      this.editorData = res.history;
     },
     saveData() {
       const dataUpdate = {
         ...this.originData
       };
-      dataUpdate.intro = this.editorData
+      dataUpdate.history = this.editorData
       const res = fetch('http://localhost:3000/data', {
         method: 'POST',
         headers: {

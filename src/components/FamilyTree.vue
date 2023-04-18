@@ -61,7 +61,8 @@ export default {
       }
       return {
         collapse: {
-          level: 2
+          level: 2,
+          allChildren: true,
         },
         nodeBinding: {
           field_0: "name",
@@ -152,9 +153,27 @@ export default {
     });
     this.chart.on('searchclick', function (sender, nodeId) {
       document.querySelector('.boc-search .boc-link-boc-button').click();
+      while(tempChart.getScale() < 1) {
+        tempChart.zoom(true);
+      }
+      while(tempChart.getScale() > 1) {
+        tempChart.zoom(false);
+      }
+
       tempChart.center(nodeId, null, function(){
         document.querySelector(`[data-n-id="${nodeId}"]`).classList.add('highlight');
       });
+    });
+    this.chart.on('expcollclick', function (sender, collapse, id, ids) {
+      console.log('expcollclick', collapse)
+      if (!collapse) {
+        sender.center(id, {
+          parentState: OrgChart.COLLAPSE_PARENT_NEIGHBORS,
+          childrenState: OrgChart.COLLAPSE_SUB_CHILDRENS,
+          rippleId: id
+        });
+        return false;
+      }
     });
     this.chart.onUpdateNode(async (args) => {
       await this.updateNode(args['newData']);
@@ -177,6 +196,7 @@ export default {
   flex-grow: 0 !important;
 }
 #tree {
+  margin-top: 72px;
   width: 100%;
   height: 100%;
   background-image: url('http://4.bp.blogspot.com/-J_sg6Pyug94/ULxnyFlF_zI/AAAAAAAAP2o/-aqOcdJt58w/s1600/nengiaphavang.jpg');
