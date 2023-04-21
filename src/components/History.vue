@@ -21,6 +21,7 @@
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import BaseService from '../service.js';
+import {getData, updateData} from "../firebase.service.js";
 export default {
   data() {
     const editMode = BaseService.getModeEdit();
@@ -41,11 +42,12 @@ export default {
       this.showEdit = !this.showEdit;
     },
     async fetchData() {
-      const res = await fetch(
-          `http://localhost:3000/data`
-      ).then((response) => {
-        return response.json();
-      });
+      const res = await getData(`data`);
+      // const res = await fetch(
+      //     `http://localhost:3000/data`
+      // ).then((response) => {
+      //   return response.json();
+      // });
       this.originData = res;
       this.editorData = res.history;
     },
@@ -54,15 +56,16 @@ export default {
         ...this.originData
       };
       dataUpdate.history = this.editorData
-      const res = fetch('http://localhost:3000/data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataUpdate),
-      }).then((response) => {
-        return response.json();
-      });
+      updateData(`data`, dataUpdate)
+      // const res = fetch('http://localhost:3000/data', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(dataUpdate),
+      // }).then((response) => {
+      //   return response.json();
+      // });
     },
   },
   created() {

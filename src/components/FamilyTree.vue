@@ -6,6 +6,7 @@
 
 import OrgChart from '@balkangraph/orgchart.js'
 import BaseService from "../service.js";
+import {getData, removeData, updateData} from "../firebase.service.js";
 
 export default {
 
@@ -44,6 +45,7 @@ export default {
           edit: { text: "Sửa"}
         }
         buttons = {
+          template: 'olivia',
           edit: {
             icon: OrgChart.icon.edit(24,24,'#fff'),
                 text: 'Sửa',
@@ -60,6 +62,8 @@ export default {
         }
       }
       return {
+        align: OrgChart.align.orientation,
+        sticky: false,
         collapse: {
           level: 2,
           allChildren: true,
@@ -89,62 +93,32 @@ export default {
         }
       }
     },
-    callApiMembers: function () {
-      return fetch('http://localhost:3000/members')
-          .then(response => {
-            return response.json();
-          })
+    callApiMembers: async function () {
+      let data = await getData(`members`)
+      let dataArr = this.transformData(data);
+      return dataArr
     },
     transformData: function (data) {
+      let arr = []
       data.map(member => {
         //remove key
         const hideFields = ['dateDie'];
         this.removeFieldObject(member, hideFields)
+        arr.push(member);
         return member;
       })
-      return data;
+      return arr;
     },
     removeFieldObject(member, arrKey) {
       for (let key of arrKey) {
         delete member[key];
       }
     },
-    updateNode: function (data) {
-      return fetch('http://localhost:3000/members/' + data.id, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      }).then(response => {
-        return response.json();
-      })
-    },
-    addNewNode: function (data) {
-      return fetch('http://localhost:3000/members', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      }).then(response => {
-        return response.json();
-      })
-    },
-    removeNode: function (id) {
-      return fetch('http://localhost:3000/members/' + id, {
-        method: 'DELETE',
-      }).then(response => {
-        return response.json();
-      })
-    },
   },
   async mounted () {
-    let data = await this.callApiMembers()
-    this.nodes = this.transformData(data)
+    this.nodes = await this.callApiMembers();
     this.initTree(this.$refs.tree, this.nodes)
     const tempChart = this.chart;
-
     this.chart.on('field', function(sender, args) {
       if (args.name == 'level') {
         let level = tempChart.getNode(args.data.id)?.level;
@@ -159,33 +133,35 @@ export default {
       while(tempChart.getScale() > 1) {
         tempChart.zoom(false);
       }
-
-      tempChart.center(nodeId, null, function(){
+      tempChart.center(nodeId, {horizontal: false, vertical: true}, function(){
         document.querySelector(`[data-n-id="${nodeId}"]`).classList.add('highlight');
       });
+      return false;
     });
-    this.chart.on('expcollclick', function (sender, collapse, id, ids) {
-      console.log('expcollclick', collapse)
-      if (!collapse) {
-        sender.center(id, {
-          parentState: OrgChart.COLLAPSE_PARENT_NEIGHBORS,
-          childrenState: OrgChart.COLLAPSE_SUB_CHILDRENS,
-          rippleId: id
-        });
-        return false;
-      }
-    });
+    // this.chart.on('expcollclick', function (sender, collapse, id, ids) {
+    //   if (!collapse) {
+    //     sender.center(id, {
+    //       parentState: OrgChart.COLLAPSE_PARENT_NEIGHBORS,
+    //       childrenState: OrgChart.COLLAPSE_SUB_CHILDRENS,
+    //       rippleId: id
+    //     });
+    //     return false;
+    //   }
+    // });
     this.chart.onUpdateNode(async (args) => {
-      await this.updateNode(args['newData']);
+      const data = args['newData']
+      await updateData(`members/${data.id - 1}`, data);
     });
     this.chart.onAddNode(async (args) => {
-      args['data']['id']= ++this.nodes.slice(-1)[0].id;
-      await this.addNewNode(args['data']);
-      const data = await this.callApiMembers()
-      this.chart.load(data)
+      const id = ++this.nodes.slice(-1)[0].id;
+      args['data']['id'] = id
+      const dataUpdate = args['data'];
+      await updateData(`members/${id}`, dataUpdate);
+      const data = await this.callApiMembers();
+      tempChart.load(data)
     });
     this.chart.onRemoveNode(async (args) => {
-      await this.removeNode(args.id);
+      await removeData(`members/${args.id}`);
     });
   }
 }

@@ -24,6 +24,7 @@
 
 <script>
 import bcrypt from 'bcryptjs'
+import {getData} from "../firebase.service.js";
 export default {
   data() {
     return {
@@ -38,31 +39,27 @@ export default {
         alert('Hãy nhập thông tin đăng nhập!')
         return;
       }
-      let data = await this.fetchLogin();
-      console.log(data);
-      if (!data || !data[0] || !data[0].password) {
-        alert('Thông tin đăng nhập không chính xác!')
+      let data = await getData(`users`);
+      let name = this.name;
+      let find = data.find(item =>{
+        return item.name === name
+      })
+      if (!data || !find || !find?.password) {
+        alert('Thông tin đăng nhập không chính xác1!')
       }
 
-      this.checkLogin(data)
-    },
-    fetchLogin() {
-      return fetch(`http://localhost:3000/users?name=${this.name}`)
-          .then(response => {
-            return response.json();
-          })
+      this.checkLogin(find)
     },
     async checkLogin(data) {
-      console.log(data);
-      const rs = await bcrypt.compare(this.password, data[0].password).then((res) => {
+      const rs = await bcrypt.compare(this.password, data.password).then((res) => {
         return res;
       });
       if (!rs) {
-        alert('Thông tin đăng nhập không chính xác!')
+        alert('Thông tin đăng nhập không chính xác2!')
         return
       }
       localStorage.setItem("abcdef", "adsadwadsa");
-      if (data[0].isAdmin) {
+      if (data.isAdmin) {
         localStorage.setItem("abcdefr", false);
       }
       this.$router.push('/')

@@ -11,10 +11,14 @@
   "dependencies": {
     "@balkangraph/orgchart.js": "^8.9.45",
     "@ckeditor/ckeditor5-alignment": "36.0.1",
-    "@ckeditor/ckeditor5-basic-styles": "^37.0.1",
+    "@ckeditor/ckeditor5-basic-styles": "^37.1.0",
     "@ckeditor/ckeditor5-build-classic": "36.0.1",
     "@ckeditor/ckeditor5-dev-translations": "^36.0.0",
     "@ckeditor/ckeditor5-dev-utils": "^36.0.0",
+    "@ckeditor/ckeditor5-editor-classic": "^37.1.0",
+    "@ckeditor/ckeditor5-essentials": "^37.1.0",
+    "@ckeditor/ckeditor5-link": "^37.1.0",
+    "@ckeditor/ckeditor5-paragraph": "^37.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^36.0.1",
     "@ckeditor/ckeditor5-vue": "^4.0.1",
     "@ckeditor/vite-plugin-ckeditor5": "^0.1.1",
@@ -26,10 +30,11 @@
     "postcss-loader": "^4.3.0",
     "raw-loader": "^4.0.2",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "jquery": "^3.6.4",
     "vite": "^4.1.0"
   }
 }
