@@ -150,7 +150,7 @@ export default {
     // });
     this.chart.onUpdateNode(async (args) => {
       const data = args['newData']
-      await updateData(`members/${data.id - 1}`, data);
+      await updateData(`members/${data.id}`, data);
     });
     this.chart.onAddNode(async (args) => {
       const id = ++this.nodes.slice(-1)[0].id;
