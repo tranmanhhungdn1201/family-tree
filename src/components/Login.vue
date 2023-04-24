@@ -1,7 +1,7 @@
 <template>
   <section class="vh-90 row justify-content-center mt-lg-5 header">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100 w-100">
+    <div class="container py-5 h-100 px-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong header-card" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
@@ -62,7 +62,7 @@ export default {
       if (data.isAdmin) {
         localStorage.setItem("abcdefr", false);
       }
-      this.$router.push('/')
+      this.$router.push('/family-tree')
     }
   }
 }
