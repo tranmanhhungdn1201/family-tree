@@ -9,7 +9,7 @@ export default createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/family-tree/login',
+            path: '/login',
             component: Login,
             name: 'login',
             beforeEnter: (to, from, next) =>{
@@ -25,7 +25,7 @@ export default createRouter({
             }
         },
         {
-            path: '/family-tree',
+            path: '/',
             name: 'home',
             component: Home,
             beforeEnter: (to, from, next) =>{
@@ -41,7 +41,7 @@ export default createRouter({
             }
         },
         {
-            path: '/family-tree/history',
+            path: '/history',
             name: 'history',
             component: History,
             beforeEnter: (to, from, next) =>{
@@ -57,7 +57,7 @@ export default createRouter({
             }
         },
         {
-            path: '/family-tree/family-tree',
+            path: '/family-tree',
             name: 'tree',
             component: FamilyTree,
             beforeEnter: (to, from, next) =>{

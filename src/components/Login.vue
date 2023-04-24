@@ -62,7 +62,7 @@ export default {
       if (data.isAdmin) {
         localStorage.setItem("abcdefr", false);
       }
-      this.$router.push('/family-tree')
+      this.$router.push('/')
     }
   }
 }
