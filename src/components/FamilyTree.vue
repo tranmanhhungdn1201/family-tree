@@ -133,7 +133,7 @@ export default {
       while(tempChart.getScale() > 1) {
         tempChart.zoom(false);
       }
-      tempChart.center(nodeId, {horizontal: false, vertical: true}, function(){
+      tempChart.center(nodeId, {horizontal: true, vertical: true}, function(){
         document.querySelector(`[data-n-id="${nodeId}"]`).classList.add('highlight');
       });
       return false;

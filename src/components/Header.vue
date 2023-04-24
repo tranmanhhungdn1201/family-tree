@@ -8,16 +8,16 @@
       <div class="navbar-collapse" id="navbarNavDropdown" v-show="!showExtra">
         <ul class="navbar-nav ms-auto ">
           <li class="nav-item">
-            <router-link to="/" :class="showClassActive('home')">Trang chủ</router-link>
+            <router-link to="/family-tree" :class="showClassActive('home')">Trang chủ</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/history" :class="showClassActive('history')">Lịch sử</router-link>
+            <router-link to="/family-tree/history" :class="showClassActive('history')">Lịch sử</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/family-tree" :class="showClassActive('tree')">Gia Phả</router-link>
+            <router-link to="/family-tree/family-tree" :class="showClassActive('tree')">Gia Phả</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/login" :class="showClassActive('out')" @click="logout">Thoát</router-link>
+            <router-link to="/family-tree/login" :class="showClassActive('out')" @click="logout">Thoát</router-link>
           </li>
         </ul>
       </div>
@@ -41,7 +41,7 @@ export default {
     logout() {
       localStorage.removeItem('abcdef')
       localStorage.removeItem('abcdefr')
-      this.$router.push('/login')
+      this.$router.push('/family-tree/login')
     }
   }
 }

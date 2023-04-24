@@ -1,20 +1,22 @@
 <template>
-  <div class="container pt-5 mt-5">
-    <p>
-      <a class="btn-primary" @click="collapseEdit">
-        Chỉnh sửa
-      </a>
-    </p>
-    <div v-show="editMode && showEdit">
-      <ckeditor
-          :editor="editor"
-          v-model="editorData"
-          :config="editorConfig"
-      ></ckeditor>
-      <button class="btn btn-success m-3" @click="saveData">Lưu</button>
-      <hr />
+  <div class="main">
+    <div class="container pt-5 mt-5 pb-5">
+      <p>
+        <a class="btn-primary" @click="collapseEdit">
+          Chỉnh sửa
+        </a>
+      </p>
+      <div v-show="editMode && showEdit">
+        <ckeditor
+            :editor="editor"
+            v-model="editorData"
+            :config="editorConfig"
+        ></ckeditor>
+        <button class="btn btn-success m-3" @click="saveData">Lưu</button>
+        <hr />
+      </div>
+      <div v-html="editorData" class="mb-5"></div>
     </div>
-    <div v-html="editorData" class="mb-5"></div>
   </div>
 </template>
 
@@ -73,3 +75,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.main {
+  height: 100%;
+  overflow-y: auto;
+}
+</style>
