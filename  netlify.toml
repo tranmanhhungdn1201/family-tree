@@ -1,4 +1,4 @@
 [[redirects]]
 from = "/*"
-to = "family-tree/index.html"
+to = "index.html"
 status = 200
