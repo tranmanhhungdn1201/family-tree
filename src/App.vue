@@ -31,7 +31,7 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: Helvetica;
-  background-image: url('assets/bg2.png');
+  background-image: url('/assets/bg2.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
