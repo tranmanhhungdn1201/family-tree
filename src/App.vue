@@ -6,7 +6,6 @@
 <script>
 
 import Header from "./components/Header.vue";
-
 export default {
   name: 'app',
   components: {Header}
@@ -31,7 +30,6 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: Helvetica;
-  background-image: url('/assets/bg2.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
