@@ -31,7 +31,7 @@ html, body {
   margin: 0;
   overflow: hidden;
   font-family: Helvetica;
-  background-image: url('http://4.bp.blogspot.com/-J_sg6Pyug94/ULxnyFlF_zI/AAAAAAAAP2o/-aqOcdJt58w/s1600/nengiaphavang.jpg');
+  background-image: url('assets/bg2.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

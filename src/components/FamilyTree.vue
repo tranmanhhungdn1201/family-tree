@@ -175,7 +175,7 @@ export default {
   margin-top: 72px;
   width: 100%;
   height: 100%;
-  background-image: url('http://4.bp.blogspot.com/-J_sg6Pyug94/ULxnyFlF_zI/AAAAAAAAP2o/-aqOcdJt58w/s1600/nengiaphavang.jpg');
+  background-image: url('src/assets/bg1.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -185,7 +185,7 @@ export default {
   stroke-width: 6 !important;
 }
 [data-n-id] rect {
-  fill: #85711f;
+  fill: lightseagreen;
 }
 .highlight rect {
   fill: #db4d4d;

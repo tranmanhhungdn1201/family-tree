@@ -1,7 +1,9 @@
 <template>
-  <nav v-if="!$route.meta.hideNavbar" class="header navbar navbar-expand-lg navbar-dark bg-dark p-3">
+  <nav v-if="!$route.meta.hideNavbar" class="header navbar navbar-expand-lg navbar-dark p-3 bg-lightseagreen">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Gia Phả</a>
+      <a class="navbar-brand" href="#">
+        <img src="src/assets/gia-pha-ho-hua.png" width="285" height="45">
+      </a>
       <button class="navbar-toggler" type="button" @click="showExtra = !showExtra" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -51,5 +53,14 @@ export default {
   position: fixed;
   width: 100%;
   z-index: 99999;
+}
+.bg-lightseagreen {
+  background-color: lightseagreen;
+}
+.nav-item {
+  font-weight: bold;
+}
+.navbar-brand {
+  font-weight: bold;
 }
 </style>
