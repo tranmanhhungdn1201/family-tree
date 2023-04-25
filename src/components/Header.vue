@@ -2,7 +2,7 @@
   <nav v-if="!$route.meta.hideNavbar" class="header navbar navbar-expand-lg navbar-dark p-3 bg-lightseagreen">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="/src/assets/gia-pha-ho-hua.png" width="285" height="45">
+        <img src="/src/assets/gia-pha-ho-hua.png" height="45">
       </a>
       <button class="navbar-toggler" type="button" @click="showExtra = !showExtra" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -49,6 +49,16 @@ export default {
 }
 </script>
 <style scoped>
+@media only screen and (min-width: 600px) {
+  .navbar-brand img {
+    width: 285px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .navbar-brand img {
+    width: 250px;
+  }
+}
 .header {
   position: fixed;
   width: 100%;

@@ -1,10 +1,13 @@
 <template>
   <section class="vh-90 row justify-content-center mt-lg-5 header">
     <div class="container py-5 h-100 px-5">
-
+      <div class="row col-12 d-flex justify-content-center title">
+        <div style="width: 500px">
+          <img src="/src/assets/gia-pha-ho-hua.png" height="100">
+        </div>
+      </div>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <img src="/src/assets/gia-pha-ho-hua.png" class="mb-5" width="400" height="80">
           <div class="card shadow-2-strong header-card" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
               <h3 class="mb-5">Đăng nhập</h3>
@@ -70,6 +73,17 @@ export default {
 }
 </script>
 <style scoped>
+@media only screen and (min-width: 600px) {
+  .title img {
+    width: 400px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .title img {
+    width: 300px;
+  }
+}
+
 .vh-90 {
   height: 90vh;
 }
